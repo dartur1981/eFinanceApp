@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App\Models
  */
+
 class SysUser extends Model
 {
 	protected $table = 'sys_users';

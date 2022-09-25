@@ -1,7 +1,10 @@
 <?php
 
-use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,10 +17,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/',[ UsuarioController::class, 'index' ]);
-Route::get('/dashboard',[ UsuarioController::class, 'dashboard' ]);
+Route::get('/',  [ LoginController::class, 'formLogin' ])->name('login');
+Route::post('/login', [ LoginController::class, 'Login' ]);
 
-Route::get('/welcome', function () {
+Route::group( ['middleware' => ['auth'] ], function(){
 
-    return view('welcome');
+    Route::get('/logout', [ LogoutController::class, 'Logout' ])->name('logout');
+    
+    Route::get('/user/add', [ UserController::class, 'create' ])->name('userAdd');
+
+    Route::post('/user/add', [ UserController::class, 'store'])->name('storeUser');
 });
