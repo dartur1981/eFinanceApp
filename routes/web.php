@@ -27,4 +27,8 @@ Route::group( ['middleware' => ['auth'] ], function(){
     Route::get('/user/add', [ UserController::class, 'create' ])->name('userAdd');
 
     Route::post('/user/add', [ UserController::class, 'store'])->name('storeUser');
+    
+    Route::get('/user/edit/{su_id}', [ UserController::class, 'edit'])->name('editUser');
+
+    Route::get('/user/delete/{su_id}', [ UserController::class, 'delete'])->name('deleteUser');
 });

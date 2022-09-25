@@ -21,21 +21,22 @@
       <div class="tile-body">
         <form id="frmCadastro" name="frmCadastro" method="post" action="{{ route('storeUser') }}">
         @csrf
+        <input type="hidden" name="id" value="{{ $user->su_id ?? '' }}" /> 
         <div class="row">
           <div class="col-md-12">
             <div class="row">
               <div class="col-lg-5">
                 <div class="form-group">
                 <label class="col-form-label" for="inputDefault">Usuário</label>
-                    <input class="form-control" id="inputDefault" name="user" type="text" required>
+                    <input class="form-control" id="inputDefault" name="user" value="{{ $user->su_user ?? '' }}" type="text" required>
                 </div>
                 <div class="form-group">
                   <label class="col-form-label" for="inputDefault">Senha</label>
-                  <input class="form-control" id="inputDefault" name="password" type="password" required>
+                  <input class="form-control" id="inputDefault" name="password" value="" type="password" required>
                 </div>
                 <div class="form-group">
                   <label for="exampleSelect1">Perfil de Acesso</label>
-                  <select class="form-control" id="exampleSelect1" name="group" required>
+                  <select class="form-control" id="exampleSelect1" name="group" value="{{ $user->su_group ?? '' }}" required>
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -43,21 +44,21 @@
                     <option>5</option>
                   </select>
                 </div>
-                <!-- <div class="toggle lg">
+                <div class="toggle lg">
                   <label>
                     <label for="group">Status</label>
-                    <input type="checkbox" id="status"><span class="button-indecator"></span>
+                    <input type="checkbox" id="status" value=""><span class="button-indecator"></span>
                   </label>
-                </div> -->
+                </div>
               </div>
               <div class="col-lg-5">
                 <div class="form-group">
                   <label class="col-form-label" for="inputDefault">Nome do Usuário</label>
-                  <input class="form-control" id="inputDefault" name="name" type="text" required>
+                  <input class="form-control" id="inputDefault" name="name" value="{{ $user->su_name ?? '' }}" type="text" required>
                 </div>
                 <div class="form-group">
                   <label class="col-form-label" for="inputDefault">Conta de E-mail</label>
-                  <input class="form-control" id="inputDefault" name="email" type="email" required>
+                  <input class="form-control" id="inputDefault" name="email" value="{{ $user->su_email ?? '' }}" type="email" required>
                 </div>
               </div>
             </div>
@@ -71,5 +72,43 @@
       </div>
     </div>
   </div>
+</div>
+<div class="row">
+<div class="col-md-12">
+  <div class="tile">
+    <div class="tile-body">
+      <div class="table-responsive">
+        <table class="table  table-striped" id="tableUser">
+          <thead>
+            <tr>
+              <th>Usuário</th>
+              <th>Nome do Usuário</th>
+              <th>Conta de E-mail</th>
+              <th>Perfil do Usuário</th>
+              <th>Status do Usuário</th>
+              <th>Ação</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach($users as $value) 
+            <tr>
+              <td>{{ $value->su_user }}</td>
+              <td>{{ $value->su_name }}</td>
+              <td>{{ $value->su_email }}</td>
+              <td>{{ $value->su_group }}</td>
+              <td>{{ $value->su_status }}</td>
+              <td> 
+                <a href="{{ route('editUser',  $value->su_id) }}"><i class="fa fa-edit"></i></a> 
+                |
+                <a href="{{ route('deleteUser',  $value->su_id) }}" onclick="javascript: return confirm('Deseja delete o usuário selecionado')" ><i class="fa fa-remove"></i></a> 
+              </td>
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
 </div>
 @endsection
